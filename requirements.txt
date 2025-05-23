@@ -1,13 +1,13 @@
 streamlit
 pandas
-altair
-# เพิ่ม libraries สำหรับ LangGraph และ Hugging Face ที่นี่
+# altair # อาจจะไม่จำเป็นแล้ว
 langchain
 langchain-community
 langchain-core
-# langgraph (ถ้าใช้) หรือ langchain ที่มี langgraph อยู่แล้ว
+langgraph # <--- เพิ่ม langgraph
 transformers
-torch # หรือ tensorflow ขึ้นอยู่กับโมเดลที่เลือก
+torch # หรือ tensorflow ขึ้นอยู่กับโมเดル
 diffusers # สำหรับ Text-to-Image
+# sentence-transformers # หากใช้สำหรับ RAG
 # accelerate # อาจจำเป็นสำหรับบางโมเดล
-# sentence-transformers # สำหรับ embedding models
+# langchain-openai # หากใช้ OpenAI
