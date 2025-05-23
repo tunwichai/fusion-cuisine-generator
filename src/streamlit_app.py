@@ -1,19 +1,19 @@
 import streamlit as st
+from ai_chef_graph import run_ai_chef_graph # <--- เพิ่มการ import
 
 # --- Helper Functions (Placeholder) ---
 # ในอนาคต ฟังก์ชันเหล่านี้จะเรียก LangGraph agents
-def generate_fusion_cuisine(ingredients, cultures, extreme_ingredient, extremeness_level, restrictions):
-    # Placeholder: นี่คือส่วนที่จะเชื่อมต่อกับ LangGraph และ AI agents
-    # ในตอนนี้จะ return ค่าจำลองไปก่อน
-    print(f"Inputs: {ingredients}, {cultures}, {extreme_ingredient}, {extremeness_level}, {restrictions}")
-    return {
-        "menu_name": "ต้มยำทาโก้ลาวา (ตัวอย่าง)",
-        "image_url": "https://via.placeholder.com/500x300.png?text=ต้มยำทาโก้ลาวา", # URL รูปภาพตัวอย่าง
-        "ingredients_list": ["กุ้งแม่น้ำ", "แป้งทาโก้", "พริกขี้หนู", "มะนาว", "ตะไคร้", "ใบมะกรูด", "ซอสโมเล่ (ตัวอย่าง)"],
-        "cooking_steps": "1. เตรียมวัตถุดิบ...\n2. ผัดเครื่องต้มยำ...\n3. ประกอบร่างกับทาโก้...",
-        "chef_rationale": "เป็นการผสมผสานความจัดจ้านของต้มยำไทยเข้ากับความสนุกของทาโก้เม็กซิกัน เพิ่มความซับซ้อนด้วยซอสโมเล่",
-        "drink_pairing": "น้ำมะพร้าวปั่น หรือ Michelada"
+def generate_fusion_cuisine(ingredients_str, cultures, extreme_ingredient, extremeness_level, restrictions):
+    # สร้าง dictionary สำหรับ input ของ graph
+    user_input_dict = {
+        "ingredients": ingredients_str,
+        "cultures": cultures,
+        "extreme_ingredient": extreme_ingredient,
+        "extremeness_level": extremeness_level,
+        "restrictions": restrictions
     }
+    # เรียกใช้ graph (หรือฟังก์ชันจำลอง graph ของเรา)
+    return run_ai_chef_graph(user_input_dict)
 
 # --- UI Setup ---
 st.set_page_config(page_title="Extreme Fusion Cuisine AI Chef", layout="wide")
@@ -60,25 +60,15 @@ with st.sidebar.form(key="chef_input_form"):
 if submit_button:
     st.header("เมนูสุดจี๊ดจากเชฟ AI (AI Chef's Creation)")
 
-    # Simulate calling the AI backend
     with st.spinner("เชฟ AI กำลังปรุงอาหารสุดขั้ว... โปรดรอสักครู่..."):
-        # นี่คือส่วนที่จะเรียก AI agents จริงๆ
-        # recipe_details = generate_fusion_cuisine(
-        #     ingredients_input.split(','),
-        #     selected_cultures,
-        #     extreme_ingredient_input,
-        #     extremeness_level_input,
-        #     restrictions_input
-        # )
-        # For now, using placeholder function
+        # ส่งค่าที่ถูกต้องไปยังฟังก์ชัน
         recipe_details = generate_fusion_cuisine(
-            [ing.strip() for ing in ingredients_input.split(',')],
+            ingredients_input, # ส่งเป็น string ตามที่ text_area ให้มา
             selected_cultures,
             extreme_ingredient_input,
             extremeness_level_input,
             restrictions_input
         )
-
 
     if recipe_details:
         st.subheader(f"🍽️ {recipe_details['menu_name']}")
